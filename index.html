@@ -363,7 +363,7 @@
       color: var(--muted);
     }
 
-    /* ── Publication ── */
+    /* Publication */
     .pub-card {
       border: 1px solid var(--border);
       padding: 36px;
@@ -482,6 +482,47 @@
       body::before { display: none; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
     }
+
+    /* Burger button */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+    }
+    .burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+      transition: all 0.3s;
+    }
+    /* Animate to X when open */
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    @media (max-width: 700px) {
+      .burger { display: flex; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        flex-direction: column;
+        background: rgba(20,20,20,0.98);
+        padding: 20px 24px;
+        gap: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { font-size: 15px; }
+    }
+    
   </style>
 </head>
 <body>
@@ -496,11 +537,14 @@
       <li><a href="#publication">Publication</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
   <section id="hero">
-    <p class="hero-eyebrow">ML Engineer · Genova, Italy</p>
+    <p class="hero-eyebrow">Computer Engineer · Genova, Italy</p>
     <h1 class="hero-name">Farhan Ali<br>Khoso</h1>
     <p class="hero-title">Computer Engineer &amp; AI Developer</p>
     <p class="hero-desc">
@@ -515,7 +559,7 @@
     </div>
   </section>
 
-  <!-- ── ABOUT ── -->
+  <!-- ABOUT -->
   <section id="about">
     <p class="sec-label reveal">About</p>
     <h2 class="sec-title reveal">Who I am</h2>
@@ -535,7 +579,7 @@
           MetaHumans) and enjoy combining Generative AI with immersive environments.
         </p>
         <div class="achievement">
-          Microsoft Imagine Cup 2021 — Regional Winner South, 1st Runner Up
+          Microsoft Imagine Cup 2021 - Regional Winner South, 1st Runner Up
         </div>
       </div>
       <div class="reveal">
@@ -645,7 +689,7 @@
     </div>
   </section>
 
-  <!-- ── EXPERIENCE ── -->
+  <!-- EXPERIENCE -->
   <section id="experience">
     <p class="sec-label reveal">Experience</p>
     <h2 class="sec-title reveal">Work history</h2>
@@ -762,7 +806,7 @@
     </div>
   </section>
 
-  <!-- ── CONTACT ── -->
+  <!-- CONTACT -->
   <section id="contact">
     <p class="sec-label reveal">Contact</p>
     <h2 class="sec-title reveal" style="border-bottom:none;">Get in touch</h2>
@@ -809,6 +853,23 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Burger button
+    const burger = document.getElementById('burger');
+    const burgerNavLinks = document.querySelector('.nav-links'); // renamed
+
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      burgerNavLinks.classList.toggle('open');
+    });
+
+    burgerNavLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        burgerNavLinks.classList.remove('open');
+      });
+    });
+    
   </script>
 </body>
 </html>
